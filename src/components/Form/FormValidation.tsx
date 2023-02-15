@@ -1,6 +1,7 @@
 import { Button, Paper, Grid, TextField, Box, Typography } from "@mui/material";
 import { Form, useFormik } from "formik";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { userSchema } from "./Schema";
 import {add, edit} from '../../Redux/Actions/index'
 import { useSelector,useDispatch } from 'react-redux'
@@ -8,22 +9,30 @@ import { useSelector,useDispatch } from 'react-redux'
 type FormType = {
   editing : boolean,
   add : boolean,
-  index : any
+  index : any,
+  name: string,
+  email : string,
+  book : string,
+  price : number
 }
-const initialValues = {
-  name: "",
-  email: "",
-  book: "",
-  price: "",
-};
+
 
 function FormValidation(props :FormType ) {
 
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state : any) => state.reducerFunction );
 
   const Formik = useFormik({
-    initialValues: initialValues,
+
+    initialValues: {
+
+      name: props.name,
+      email: props.email,
+      book: props.book,
+      price: props.price,
+    },
     validationSchema: userSchema,
 
     onSubmit: (values,actions) => {
@@ -40,13 +49,13 @@ function FormValidation(props :FormType ) {
 
       }
       
-
+      navigate('/')
       actions.resetForm({
         values:{
           name: "",
           email:"",
           book : "",
-          price:""
+          price:0
         }
 
       })
@@ -151,10 +160,6 @@ function FormValidation(props :FormType ) {
                 ) : null}
               </Grid>
             </Grid>
-
-            
-           
-
 
           </Grid>
           <Grid marginY={3}>

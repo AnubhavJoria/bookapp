@@ -8,9 +8,20 @@ function Edit() {
 
     const[isVisible, setIsVisible]= useState(false);
     const [index, setIndex] = useState(-1);
-    const changeVisiblilty = (ind : any) =>{
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [book, setBook] = useState("");
+    const [price, setPrice] = useState(0);
+
+    const changeVisiblilty = (row : any, ind : any) =>{
+      console.log(ind)
         setIsVisible(true);
         setIndex(ind);
+        setName(row.name);
+        setEmail(row.email)
+        setBook(row.book)
+        setPrice(row.price)
+    
     }
 
   return (
@@ -18,8 +29,8 @@ function Edit() {
         <Typography variant='h5'> Edit Entries </Typography>
         {
     isVisible?
-    <FormValidation add={false} editing={true} index = {index} /> : 
-      < Table editing="true" delete='false' changeVisibility={changeVisiblilty}/> 
+    <FormValidation name = {name}  email = {email} book = {book}  price = {price}  add={false}  editing={true} index = {index} /> : 
+      < Table editing="true" delete='false' changeVisibility={changeVisiblilty} /> 
         }
     </div>
   )

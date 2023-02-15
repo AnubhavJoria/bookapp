@@ -16,28 +16,19 @@ type editingprops = {
     delete:string,
     changeVisibility : any,
 }
-function createData(
-  name: string,
-email:string,
-book: string,
-price:number,
-
-) {
-  return { name, email, book, price };
-}
-
-
 
 export default function BasicTable(props: editingprops) {
 
   const dispatch = useDispatch();
   const data = useSelector((state : any) => state.reducerFunction )
- 
+
+  const handleEditClick = (row : any, index : any) =>{
+    props.changeVisibility(row, index);
+
+  }
   return (
- <>
-    { props.editing === "false" && props.delete === "false" ?
-      <Typography variant='h4'> All Entries </Typography> : null
-    }
+ 
+    
     <Box margin={4} boxShadow={8}>
 
     <TableContainer component={Paper}>
@@ -64,7 +55,7 @@ export default function BasicTable(props: editingprops) {
               <TableCell align="right">{row.book}</TableCell>
               <TableCell align="right">{row.price}</TableCell>
 
-                { props.editing === "true" ? <Button variant="contained" onClick={()=>{props.changeVisibility(index)}}> Edit </Button> : null}
+                { props.editing === "true" ? <Button variant="contained" onClick={()=> {handleEditClick(row, index)}}> Edit </Button> : null}
                 { props.delete === "true" ? <Button variant="contained" onClick={()=>{dispatch(del(index)) }}> Delete </Button> : null}
 
             </TableRow>
@@ -73,6 +64,5 @@ export default function BasicTable(props: editingprops) {
       </Table>
     </TableContainer>
     </Box>
-    </>
   );
 }

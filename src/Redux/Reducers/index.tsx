@@ -7,21 +7,21 @@ interface ActionA {
 
 export const  users = [
   {
-    name : 'Harry1',
+    name : 'Harry',
     email : "harry1@gmail.com",
-    book : "Goblet of fire1",
+    book : "Goblet of fire",
     price : 2001
   }, 
   {
-    name : 'Harry2',
+    name : 'Ron',
     email : "harry2@gmail.com",
-    book : "Goblet of fire2",
+    book : "Rings of power",
     price : 2002
   } , 
   {
-    name : 'Harry3',
+    name : 'Weasely',
     email : "harry3@gmail.com",
-    book : "Goblet of fire3",
+    book : "Broken",
     price : 2003
   }
 ]
@@ -31,6 +31,7 @@ export const  users = [
 
 const reducerFunction = (state = users, action : ActionA ) =>{
 
+  console.log(state);
   switch(action.type){
 
     case "ADD":
