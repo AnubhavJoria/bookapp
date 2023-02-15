@@ -2,7 +2,14 @@ import { Button, Paper, Grid, TextField, Box, Typography } from "@mui/material";
 import { Form, useFormik } from "formik";
 import React from "react";
 import { userSchema } from "./Schema";
+import {add, edit} from '../../Redux/Actions/index'
+import { useSelector,useDispatch } from 'react-redux'
 
+type FormType = {
+  editing : boolean,
+  add : boolean,
+  index : any
+}
 const initialValues = {
   name: "",
   email: "",
@@ -10,12 +17,30 @@ const initialValues = {
   price: "",
 };
 
-function FormValidation() {
+function FormValidation(props :FormType ) {
+
+  const dispatch = useDispatch();
+  const data = useSelector((state : any) => state.reducerFunction );
+
   const Formik = useFormik({
     initialValues: initialValues,
     validationSchema: userSchema,
+
     onSubmit: (values,actions) => {
-      alert("Form submitted successfully");
+
+      if(props.editing === true){
+        const obj = {
+          values,
+          index : props.index
+        }
+        dispatch(edit({obj}));
+      }
+      if(props.add === true){
+        dispatch(add(values))
+
+      }
+      
+
       actions.resetForm({
         values:{
           name: "",
@@ -24,10 +49,10 @@ function FormValidation() {
           price:""
         }
 
-      });
+      })
     },
   });
-  console.log(Formik.handleBlur);
+
 
   return (
     <>
@@ -70,7 +95,7 @@ function FormValidation() {
             <Grid item xs={12} sm={6}>
               <Grid>
                 <TextField
-                  label="Age"
+                  label="Email"
                   value={Formik.values.email}
                   name="email"
                   onChange={Formik.handleChange}
@@ -110,7 +135,7 @@ function FormValidation() {
             <Grid item xs={12} sm={6}>
               <Grid>
                 <TextField
-                  label="Company"
+                  label="Price"
                   value={Formik.values.price}
                   name="price"
                   onChange={Formik.handleChange}

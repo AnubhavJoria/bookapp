@@ -1,47 +1,57 @@
+import {combineReducers} from "redux";
 interface ActionA {
   type: string
-  
-}
-import {combineReducers} from "redux";
-
-export const initialState = {
-  users : [],
-  currentName : "",
-  currentBook : "",
-  currentDate : "",
-  currentPrice : "",
-  index : -1
+  payload ?: any
 }
 
-const reducerFunction = (state = initialState, action : ActionA ) =>{
+
+export const  users = [
+  {
+    name : 'Harry1',
+    email : "harry1@gmail.com",
+    book : "Goblet of fire1",
+    price : 2001
+  }, 
+  {
+    name : 'Harry2',
+    email : "harry2@gmail.com",
+    book : "Goblet of fire2",
+    price : 2002
+  } , 
+  {
+    name : 'Harry3',
+    email : "harry3@gmail.com",
+    book : "Goblet of fire3",
+    price : 2003
+  }
+]
+
+ 
+
+
+const reducerFunction = (state = users, action : ActionA ) =>{
+
   switch(action.type){
 
-    case action.type : "ADD"
-      return {
-        ...initialState,
-        users : [...initialState.users, {
-          name : initialState.currentName,
-          book : initialState.currentBook,
-          date : initialState.currentDate,
-          price : initialState.currentPrice
-        }]
-      }
-    case action.type : "DELETE"
-      return {
-        ...initialState,
-        users : initialState.users.splice(initialState.index, 1)
-      }
-    // case action.type : "EDIT"
-    //   return {
-    //     ...initialState,
-    //     // users : initialState.users.splice(initialState.index, 1, "hello")
-    //     users : initialState.users.splice(initialState.index, 1, {
-    //       name : initialState.currentName,
-    //       book : initialState.currentBook,
-    //       date : initialState.currentDate,
-    //       price : initialState.currentPrice
-    //     })
-    //   }
+    case "ADD":
+      return  [...state, action.payload]
+
+    case "DELETE":
+      return state.filter((data, index) => index !== action.payload);
+      
+    
+    case "EDIT":
+      return state = state.map((element, ind)=>{
+        if(ind === action.payload.obj.index){
+          return action.payload.obj.values
+        }
+        else{
+          return element;
+        }
+
+      })
+    default:
+      return state;
   }
 
 

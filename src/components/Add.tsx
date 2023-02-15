@@ -4,7 +4,7 @@ import FormValidation from './Form/FormValidation'
 function Add() {
   return (
     <div>
-      <FormValidation/>
+      <FormValidation add = {true} editing={false} index={-1}/>
     </div>
   )
 }

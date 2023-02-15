@@ -7,9 +7,10 @@ import FormValidation from './Form/FormValidation';
 function Edit() {
 
     const[isVisible, setIsVisible]= useState(false);
-
-    const changeVisiblilty = () =>{
+    const [index, setIndex] = useState(-1);
+    const changeVisiblilty = (ind : any) =>{
         setIsVisible(true);
+        setIndex(ind);
     }
 
   return (
@@ -17,9 +18,8 @@ function Edit() {
         <Typography variant='h5'> Edit Entries </Typography>
         {
     isVisible?
-    <FormValidation/> : 
+    <FormValidation add={false} editing={true} index = {index} /> : 
       < Table editing="true" delete='false' changeVisibility={changeVisiblilty}/> 
-      
         }
     </div>
   )

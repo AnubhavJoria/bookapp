@@ -1,17 +1,23 @@
-
-export const add = () =>{
+type propIndex = {
+    index : number
+}
+export const add = (payload : any) =>{
     return {
-        type:"ADD"
+        type:"ADD",
+        payload : payload
+        
     }
 };
 
-export const edit = () =>{
+export const edit = (payload : any) =>{
     return {
-        type:"EDIT"
+        type:"EDIT",
+        payload : payload
     }
 }
-export const del= () =>{
+export const del= (index : any) =>{
     return {
-        type:"DELETE"
+        type:"DELETE",
+        payload : index
     }
 }

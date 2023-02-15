@@ -7,28 +7,37 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import {del} from '../Redux/Actions'
+import { useSelector,useDispatch } from 'react-redux'
+
 type editingprops = {
     editing:string,
     delete:string,
-    changeVisibility : any
+    changeVisibility : any,
 }
 function createData(
   name: string,
 email:string,
 book: string,
-price:number
+price:number,
+
 ) {
   return { name, email, book, price };
 }
 
-const rows = [
-  createData('Harry', "harry@gmail.com", "Goblet of fire", 200),
- 
-];
+
 
 export default function BasicTable(props: editingprops) {
+
+  const dispatch = useDispatch();
+  const data = useSelector((state : any) => state.reducerFunction )
+ 
   return (
+ <>
+    { props.editing === "false" && props.delete === "false" ?
+      <Typography variant='h4'> All Entries </Typography> : null
+    }
     <Box margin={4} boxShadow={8}>
 
     <TableContainer component={Paper}>
@@ -43,7 +52,7 @@ export default function BasicTable(props: editingprops) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {data.map((row : any, index : any  ) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -51,13 +60,12 @@ export default function BasicTable(props: editingprops) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              {/* <TableCell align="right">{row.name}</TableCell> */}
               <TableCell align="right">{row.email}</TableCell>
               <TableCell align="right">{row.book}</TableCell>
               <TableCell align="right">{row.price}</TableCell>
 
-                { props.editing === "true" ? <Button variant="contained" onClick={()=>{props.changeVisibility()}}> Edit </Button> : null}
-                { props.delete === "true" ? <Button variant="contained"> Delete </Button> : null}
+                { props.editing === "true" ? <Button variant="contained" onClick={()=>{props.changeVisibility(index)}}> Edit </Button> : null}
+                { props.delete === "true" ? <Button variant="contained" onClick={()=>{dispatch(del(index)) }}> Delete </Button> : null}
 
             </TableRow>
           ))}
@@ -65,5 +73,6 @@ export default function BasicTable(props: editingprops) {
       </Table>
     </TableContainer>
     </Box>
+    </>
   );
 }
